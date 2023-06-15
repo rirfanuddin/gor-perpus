@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [\App\Http\Controllers\BooksController::class,"getBooks"]);
+Route::get('/collections', [\App\Http\Controllers\BooksController::class,"getBooks"]);
+
+Route::get('/add_collection', [\App\Http\Controllers\BooksController::class,"storeCollection"]);

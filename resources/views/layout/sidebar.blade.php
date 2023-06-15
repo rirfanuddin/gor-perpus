@@ -19,14 +19,14 @@
         </a>
       </li>
       <li class="nav-item nav-category">Koleksi</li>
-      <li class="nav-item {{ active_class(['apps/search']) }}">
-        <a href="{{ url('/apps/search') }}" class="nav-link">
+      <li class="nav-item {{ active_class(['collections']) }}">
+        <a href="{{ url('/collections') }}" class="nav-link">
           <i class="link-icon" data-feather="search"></i>
           <span class="link-title">Pencarian</span>
         </a>
       </li>
-      <li class="nav-item {{ active_class(['apps/calendar']) }}">
-        <a href="{{ url('/apps/calendar') }}" class="nav-link">
+      <li class="nav-item {{ active_class(['add_collection']) }}">
+        <a href="{{ url('add_collection') }}" class="nav-link">
           <i class="link-icon" data-feather="file-plus"></i>
           <span class="link-title">Tambah Koleksi</span>
         </a>

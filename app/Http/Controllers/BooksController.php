@@ -17,6 +17,11 @@ class BooksController extends Controller
 
         $responseBody = json_decode($response->getBody());
 
-        return view('pages.basic-tables', compact('responseBody'));
+        return view('pages.collections', compact('responseBody'));
     }
+
+    public function storeCollection() {
+        return view('pages.add-collection');
+    }
+
 }
