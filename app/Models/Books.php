@@ -9,4 +9,6 @@ class Books extends Model
 {
     public $table = 'gorlib_buku';
     protected $guarded = '*';
+
+    protected $primaryKey = 'id';
 }

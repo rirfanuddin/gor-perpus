@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, "index"]);
+
 Route::get('/collections', [\App\Http\Controllers\BooksController::class,"getBooks"]);
 
+Route::get('/collections/{id}', [\App\Http\Controllers\BooksController::class, "getBookDetail"]);
+
 Route::get('/add_collection', [\App\Http\Controllers\BooksController::class,"storeCollection"]);
+
+Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);

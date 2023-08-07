@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Books;
+use Illuminate\Support\Facades\DB;
 
 class APIBooksController extends Controller
 {
     function getAllBooks() {
-        $data = Books::get();
+        $data = DB::table('gorlib_buku')->get();
         return $data;
     }
 
