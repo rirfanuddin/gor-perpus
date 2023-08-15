@@ -14,15 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('halaman-utama');
 });
+
+Route::get('/', [\App\Http\Controllers\HalamanUtamaController::class, "getBooks"]);
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, "index"]);
 
-Route::get('/collections', [\App\Http\Controllers\BooksController::class,"getBooks"]);
+Route::get('/collections', [\App\Http\Controllers\BooksController::class,"getBooks"])->name('collections');
 
 Route::get('/collections/{id}', [\App\Http\Controllers\BooksController::class, "getBookDetail"]);
 
 Route::get('/add_collection', [\App\Http\Controllers\BooksController::class,"storeCollection"]);
+Route::post('/add_collection_db', [\App\Http\Controllers\BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
+
+Route::get('/update_collection/{id}', [\App\Http\Controllers\BooksController::class, "updateCollection"]);
 
 Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);
