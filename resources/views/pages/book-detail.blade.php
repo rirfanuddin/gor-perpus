@@ -34,23 +34,47 @@
                                     </tr>
                                     <tr>
                                         <th>Pengarang</th>
-                                        <td>Jacob</td>
+                                        <td>{{ $pengarang_utama . " " . $pengarang_tambahan }}</td>
                                     </tr>
                                     <tr>
                                         <th>Penerbit</th>
-                                        <td>Larry</td>
+                                        <td>{{ $penerbit }}</td>
                                     </tr>
                                     <tr>
                                         <th>Kota Terbit</th>
-                                        <td>Larry</td>
+                                        <td>{{ $kota_terbit }}</td>
                                     </tr>
                                     <tr>
                                         <th>Tahun Terbit</th>
-                                        <td>Larry</td>
+                                        <td>{{ $tahun_terbit }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Tahun Terbit</th>
-                                        <td>Larry</td>
+                                        <th>Bukti Fisik Romawi</th>
+                                        <td>{{ $bukti_fisik_romawi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Bukti Fisik Halaman</th>
+                                        <td>{{ $bukti_fisik_halaman }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Bukti Fisik Tebal</th>
+                                        <td>{{ $bukti_fisik_tebal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ISBN</th>
+                                        <td>{{ $isbn }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Subyek</th>
+                                        <td>{{ $subyek }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jenis Koleksi</th>
+                                        <td>{{ $jenis_koleksi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Bahasa</th>
+                                        <td>{{ $bahasa }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
