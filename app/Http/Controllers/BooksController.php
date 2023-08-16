@@ -79,4 +79,41 @@ class BooksController extends Controller
         return view('pages.update-collection', $book);
     }
 
+    public function updateCollectionDB(Request $request) {
+        $validatedData = $request->validate([
+            'judul_utama' => 'required|string|max:255',
+            'pengarang_utama' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $book = Books::where('id', $request->id)->first();
+
+        if($request->file('cover')) {
+            $cover = $request->file('cover');
+            $coverName = time() . '.' . $cover->getClientOriginalExtension();
+            $cover->move(public_path('assets/images'), $coverName);
+            $book->cover = $coverName;
+        }
+
+        $book->judul_utama = $validatedData['judul_utama'];
+        $book->judul_tambahan = $request->judul_tambahan;
+        $book->pengarang_utama = $validatedData['pengarang_utama'];
+        $book->pengarang_tambahan = $request->pengarang_tambahan;
+        $book->penerbit = $request->penerbit;
+        $book->kota_terbit = $request->kota_terbit;
+        $book->tahun_terbit = $request->tahun_terbit;
+        $book->bukti_fisik_romawi = $request->bukti_fisik_romawi;
+        $book->bukti_fisik_halaman = $request->bukti_fisik_halaman;
+        $book->bukti_fisik_tebal = $request->bukti_fisik_tebal;
+        $book->isbn = $request->isbn;
+        $book->subyek = $request->subyek;
+        $book->jenis_koleksi = $request->jenis_koleksi;
+        $book->bahasa = $request->bahasa;
+        $book->update();
+
+
+        return redirect()->route('detailCollection' , $book->id)->with('success', 'Post created successfully');
+    }
+
 }

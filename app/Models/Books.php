@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Books extends Model
 {
     public $table = 'gorlib_buku';
-    protected $guarded = '*';
-
     protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $guarded = [''];
+    protected $keyType = 'string';
 }
