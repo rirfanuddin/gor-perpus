@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('halaman-utama');
-});
-
 Route::get('/', [\App\Http\Controllers\HalamanUtamaController::class, "getBooks"]);
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, "index"]);

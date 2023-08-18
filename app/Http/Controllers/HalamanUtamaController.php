@@ -4,18 +4,12 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HalamanUtamaController extends Controller
 {
     public function getBooks() {
-        $client = new Client();
-        $url = "http://localhost/gor-perpus/public/api/books";
-
-        $response = $client->request('GET', $url, [
-            'verify'  => false,
-        ]);
-
-        $responseBody = json_decode($response->getBody());
+        $responseBody = DB::table('gorlib_buku')->orderBy('updated_at', 'desc')->get();
 
         return view('halaman-utama', compact('responseBody'));
     }

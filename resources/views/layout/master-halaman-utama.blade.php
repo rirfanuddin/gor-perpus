@@ -31,7 +31,7 @@
 
   <div class="main-container" id="app">
     <div class="page-wrapper">
-      @include('layout.header')
+      @include('layout.header-halaman-utama')
       <div class="page-content">
         @yield('content')
       </div>

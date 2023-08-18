@@ -41,11 +41,6 @@
                                                 <i data-feather="eye"></i>
                                             </button>
                                         </a>
-                                        <a href="##">
-                                            <button type="button" class="btn btn-warning btn-icon">
-                                                <i data-feather="edit"></i>
-                                            </button>
-                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
