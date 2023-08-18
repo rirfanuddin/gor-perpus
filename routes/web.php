@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HalamanUtamaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,22 +16,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HalamanUtamaController::class, "getBooks"]);
+Route::get('/', [HalamanUtamaController::class, "getBooks"])->name('halamanUtama');
+Route::post('/db/tamu', [HalamanUtamaController::class, "storeTamu"])->name('storeTamuDB');
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, "index"]);
+Route::get('/dashboard', [DashboardController::class, "index"]);
 
-Route::get('/collections', [\App\Http\Controllers\BooksController::class,"getBooks"])->name('collections');
+Route::get('/collections', [BooksController::class,"getBooks"])->name('collections');
 
-Route::get('/collections/{id}', [\App\Http\Controllers\BooksController::class, "getBookDetail"])->name("detailCollection");
+Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");
 
-Route::get('/add_collection', [\App\Http\Controllers\BooksController::class,"storeCollection"]);
-Route::post('/add_collection_db', [\App\Http\Controllers\BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
+Route::get('/add_collection', [BooksController::class,"storeCollection"]);
+Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
 
-Route::get('/update_collection/{id}', [\App\Http\Controllers\BooksController::class, "updateCollection"]);
-Route::post('/update_collection_db/{id}', [\App\Http\Controllers\BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
+Route::get('/update_collection/{id}', [BooksController::class, "updateCollection"]);
+Route::post('/update_collection_db/{id}', [BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
 
 Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth', 'user-role:user'])->group(function() {
+    Route::get("/user/home", [\App\Http\Controllers\TestUserRoleController::class, 'home']);
+});
+
+Route::middleware(['auth', 'user-role:admin'])->group(function() {
+    Route::get("/admin/home", [\App\Http\Controllers\TestUserRoleController::class, 'adminHome']);
+});
+

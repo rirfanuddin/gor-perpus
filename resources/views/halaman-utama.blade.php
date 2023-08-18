@@ -51,6 +51,92 @@
             </div>
         </div>
     </div>
+
+    {{--  modal form input tamu  --}}
+    <div class="modal fade" id="varyingModal" tabindex="-1" role="dialog" aria-labelledby="varyingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="varyingModalLabel">Pengisian Buku Tamu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('storeTamuDB') }}" method="POST" id="formTamu">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="name" class="col-form-label">Nama:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_no" class="col-form-label">No. HP:</label>
+                            <input type="text" class="form-control" id="phone_no" name="phone_no">
+                        </div>
+                        <div class="form-group">
+                            <label for="asal_instansi" class="col-form-label">Asal Instansi:</label>
+                            <input type="text" class="form-control" id="asal_instansi" name="asal_instansi">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="inputDataTamu">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--  modal success  --}}
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Sukses</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Data tamu berhasil disimpan!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const submitButton = document.getElementById('inputDataTamu');
+            const guestForm = document.getElementById('formTamu');
+            const successModal = document.getElementById('successModal');
+
+            submitButton.addEventListener('click', function () {
+                const formData = new FormData(guestForm);
+
+                fetch('/db/tamu', {
+                    method: 'POST',
+                    body: formData,
+                    // headers: {
+                    //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    // }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            $('#varyingModal').modal('hide');
+                            $('#successModal').modal('show');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+
+    </script>
 @endsection
 
 @push('plugin-scripts')
