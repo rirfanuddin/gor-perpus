@@ -28,3 +28,7 @@ Route::get('/update_collection/{id}', [\App\Http\Controllers\BooksController::cl
 Route::post('/update_collection_db/{id}', [\App\Http\Controllers\BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
 
 Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
