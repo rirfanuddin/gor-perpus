@@ -18,7 +18,7 @@
       </li>
 
       <li class="nav-item dropdown nav-notifications">
-          <a href="#" class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
+          <a href="/login" class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
       </li>
     </ul>
   </div>

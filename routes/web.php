@@ -21,7 +21,7 @@ Route::post('/db/tamu', [HalamanUtamaController::class, "storeTamu"])->name('sto
 
 Route::get('/dashboard', [DashboardController::class, "index"]);
 
-Route::get('/collections', [BooksController::class,"getBooks"])->name('collections');
+
 
 Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");
 
@@ -37,8 +37,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'user-role:user'])->group(function() {
+Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get("/user/home", [\App\Http\Controllers\TestUserRoleController::class, 'home']);
+    Route::get('/collections', [BooksController::class,"getBooks"])->name('collections');
 });
 
 Route::middleware(['auth', 'user-role:admin'])->group(function() {
