@@ -206,12 +206,6 @@
               </li>
               <li class="nav-item">
                 <a href="javascript:;" class="nav-link">
-                  <i data-feather="repeat"></i>
-                  <span>Switch User</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="javascript:;" class="nav-link">
                   <i data-feather="log-out"></i>
                   <span>Log Out</span>
                 </a>
