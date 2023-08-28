@@ -10,8 +10,16 @@ use Illuminate\Support\Str;
 class APIBooksController extends Controller
 {
     function getAllBooks() {
-        $data = DB::table('gorlib_buku')->get();
+        $data = DB::table('gorlib_buku')
+            ->select('id', 'judul_utama', 'judul_tambahan')
+            ->orderBy('judul_utama', 'asc')
+            ->get();
         return $data;
+    }
+
+    function getDetailBook(Request $request) {
+        $book = Books::where('id', $request->id)->first();
+        return response()->json($book);
     }
 
     function saveBook(Request $request) {

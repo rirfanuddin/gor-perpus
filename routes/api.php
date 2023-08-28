@@ -18,7 +18,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/books', [\App\Http\Controllers\APIBooksController::class, 'getAllBooks']);
 Route::post('/books', [\App\Http\Controllers\APIBooksController::class, 'saveBook']);
 Route::put('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'updateBook']);
 Route::delete('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'deleteBook']);
+
+// API untuk preview book
+Route::get('/books', [\App\Http\Controllers\APIBooksController::class, 'getAllBooks']);
+Route::get('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'getDetailBook']);

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HalamanUtamaController;
+use App\Http\Controllers\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get("/user/home", [\App\Http\Controllers\TestUserRoleController::class, 'home']);
     Route::get('/collections', [BooksController::class,"getBooks"])->name('collections');
+    Route::get('/buat-peminjaman', [PeminjamanController::class, "createPeminjaman"]);
 });
 
 Route::middleware(['auth', 'user-role:admin'])->group(function() {
