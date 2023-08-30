@@ -42,6 +42,8 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get("/user/home", [\App\Http\Controllers\TestUserRoleController::class, 'home']);
     Route::get('/collections', [BooksController::class,"getBooks"])->name('collections');
     Route::get('/buat-peminjaman', [PeminjamanController::class, "createPeminjaman"]);
+    Route::post('/buat-peminjaman-db', [PeminjamanController::class, "createPeminjamanDB"])->name("createPeminjamanDB");
+    Route::get('/api/get-user-id', [\App\Http\Controllers\APIPeminjamanController::class, 'getUserId']);
 });
 
 Route::middleware(['auth', 'user-role:admin'])->group(function() {

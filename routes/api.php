@@ -25,3 +25,6 @@ Route::delete('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'd
 // API untuk preview book
 Route::get('/books', [\App\Http\Controllers\APIBooksController::class, 'getAllBooks']);
 Route::get('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'getDetailBook']);
+
+
+Route::post('/peminjaman_buku', [\App\Http\Controllers\APIPeminjamanController::class, 'createPeminjaman']);

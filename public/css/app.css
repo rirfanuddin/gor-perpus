@@ -31904,3 +31904,11 @@ div.tagsinput span.tag a {
 
 
 /*# sourceMappingURL=app.css.map*/
+datalist option {
+    background-color: white;
+    padding: 4px;
+    color: blue;
+    margin-bottom: 1px;
+    font-size: 18px;
+    cursor: pointer;
+}

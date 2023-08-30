@@ -6,15 +6,37 @@
             <div class="card-body">
                 <h4 class="card-title">Pilih Buku</h4>
                 <p class="card-description">Silakan pilih buku dengan mengetikkan judul buku.</p>
-                <div class="form-group">
-                    <label>Cari Judul Buku</label>
-                    <select class="w-100" v-model="selectedBookId" @change="fetchBookDetails">
-                        <option value="">Pilih Judul Buku</option>
-                        <option v-for="book in books" :key="book.id" :value="book.id">{{ book.judul_utama + " " + book.judul_tambahan }}</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" type="submit" v-if="bookDetails">Pinjam</button>
+                <form @submit.prevent="submitPeminjaman">
+                    <div class="form-group">
+                        <label>Cari Judul Buku</label>
+                        <select class="w-100" v-model="selectedBookId" @change="fetchBookDetails">
+                            <option value="">Pilih Judul Buku</option>
+                            <option v-for="book in books" :key="book.id" :value="book.id">{{ book.judul_utama + " " + book.judul_tambahan }}</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" type="submit" v-if="bookDetails">Pinjam</button>
+                </form>
             </div>
+
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Sukses</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Data peminjaman buku berhasil disimpan.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="col-md-6 grid-margin stretch-card">
@@ -96,12 +118,15 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             selectedBookId: null,
             books: [],
             bookDetails: null,
+            userId: null,
         }
     },
     methods: {
@@ -115,7 +140,6 @@ export default {
             }
         },
         async fetchBookDetails() {
-            console.log('masuk fetchBookDetails function');
             if (this.selectedBookId) {
                 try {
                     console.log('selectedBookId : ' + this.selectedBookId);
@@ -129,9 +153,36 @@ export default {
                 this.bookDetails = null;
             }
         },
+        async getUserId() {
+            try {
+                const response = await axios.get('/api/get-user-id'); // Replace with your route
+                this.userId = response.data.user_id;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async submitPeminjaman() {
+            console.log('masuk function submitPeminjaman');
+            try {
+                if(this.selectedBookId) {
+                    const response = await axios.post('/api/peminjaman_buku', {
+                        user_id: this.selectedBookId,
+                        book_id: this.userId,
+                    });
+
+                    if(response.status === 200){
+                        $('#successModal').modal('show');
+                    }
+
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
     },
     mounted() {
         this.fetchBooks();
+        this.getUserId();
     },
 }
 </script>

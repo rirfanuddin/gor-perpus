@@ -29,7 +29,7 @@
                 <li class="nav-item nav-category">Sirkulasi</li>
                 <li class="nav-item {{ active_class(['buat-peminjaman']) }}">
                     <a href="{{ url('/buat-peminjaman') }}" class="nav-link">
-                        <i class="link-icon" data-feather="book-open"></i>
+                        <i class="link-icon" data-feather="edit-3"></i>
                         <span class="link-title">Buat Peminjaman</span>
                     </a>
                 </li>

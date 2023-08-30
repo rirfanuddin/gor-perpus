@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('book_id')->references('id')->on('gorlib_buku');
             $table->date('tanggal_harus_kembali');
             $table->string('status');
-            $table->dateTime('tanggal_kembali');
+            $table->dateTime('tanggal_kembali')->nullable();
             $table->timestamps();
         });
     }

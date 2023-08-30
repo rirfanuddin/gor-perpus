@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Books;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -114,6 +115,13 @@ class BooksController extends Controller
 
 
         return redirect()->route('detailCollection' , $book->id)->with('success', 'Post created successfully');
+    }
+
+    public function getUserId() {
+        dd(Auth::user());
+        return response()->json([
+            'user_id' => Auth::user()->id
+        ]);
     }
 
 }
