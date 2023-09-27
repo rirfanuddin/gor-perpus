@@ -166,8 +166,8 @@ export default {
             try {
                 if(this.selectedBookId) {
                     const response = await axios.post('/api/peminjaman_buku', {
-                        user_id: this.selectedBookId,
-                        book_id: this.userId,
+                        user_id: this.userId,
+                        book_id: this.selectedBookId,
                     });
 
                     if(response.status === 200){

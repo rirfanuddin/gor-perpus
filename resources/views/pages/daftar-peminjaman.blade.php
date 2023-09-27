@@ -29,36 +29,48 @@
                                 <th>Tanggal Harus Kembali</th>
                                 <th>Tanggal Kembali</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Firman Ibrahim</td>
-                                <td>Pemeriksaan Kinerja</td>
-                                <td>13:15 17/08/2023</td>
-                                <td>13:15 17/09/2023</td>
-                                <td>-</td>
-                                <td><span class="badge badge-warning">Belum Dikembalikan</span></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Arto Gafar</td>
-                                <td>Pemeliharaan KDO</td>
-                                <td>13:15 16/08/2023</td>
-                                <td>13:15 16/09/2023</td>
-                                <td>10:17 19/08/2023</td>
-                                <td><span class="badge badge-success">Dikembalikan</span></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Firman Ibrahim</td>
-                                <td>Pemeriksaan Kinerja</td>
-                                <td>13:15 17/08/2023</td>
-                                <td>13:15 17/09/2023</td>
-                                <td>-</td>
-                                <td><span class="badge badge-danger">Terlambat</span></td>
-                            </tr>
+                            @foreach($responseBody as $x)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $x->name }}</td>
+                                    <td>{{ $x->judul_utama . " " . $x->judul_tambahan}}</td>
+                                    <td>{{ date('d-m-Y', strtotime($x->created_at)) }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($x->tanggal_harus_kembali)) }}</td>
+                                    @if($x->tanggal_kembali)
+                                        <td>{{ date('d-m-Y', strtotime($x->tanggal_kembali)) }}</td>
+                                    @else
+                                        <td>-</td>
+                                    @endif
+
+                                    @if($x->status === 'DIPINJAM')
+                                        @if(now() > $x->tanggal_harus_kembali)
+                                            <td><span class="badge badge-danger">Terlambat, Belum Dikembalikan</span></td>
+                                        @else
+                                            <td><span class="badge badge-warning">Sedang Dipinjam</span></td>
+                                        @endif
+                                    @elseif($x->status === 'DIKEMBALIKAN')
+                                        <td><span class="badge badge-success">Telah Dikembalikan</span></td>
+                                    @endif
+
+                                    <th>
+                                        <a href="/peminjaman/{{$x->id}}">
+                                            <button type="button" class="btn btn-primary btn-icon" hr>
+                                                <i data-feather="eye"></i>
+                                            </button>
+                                        </a>
+                                        <a href="/update_collection/{{$x->id}}">
+                                            <button type="button" class="btn btn-warning btn-icon">
+                                                <i data-feather="edit"></i>
+                                            </button>
+                                        </a>
+                                    </th>
+
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
