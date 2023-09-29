@@ -31912,3 +31912,7 @@ datalist option {
     font-size: 18px;
     cursor: pointer;
 }
+
+.item img {
+    height: 500px;
+}
