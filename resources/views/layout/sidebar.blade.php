@@ -13,8 +13,8 @@
         <ul class="nav">
             @if(Auth::user()->role === 'user')
                 <li class="nav-item nav-category">Main</li>
-                <li class="nav-item {{ active_class(['dashboard']) }}">
-                    <a href="{{ url('/dashboard') }}" class="nav-link">
+                <li class="nav-item {{ active_class(['home']) }}">
+                    <a href="{{ url('/home') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Dashboard</span>
                     </a>
@@ -43,8 +43,8 @@
 
             @if(Auth::user()->role === 'admin')
                 <li class="nav-item nav-category">Main</li>
-                <li class="nav-item {{ active_class(['dashboard']) }}">
-                    <a href="{{ url('/dashboard') }}" class="nav-link">
+                <li class="nav-item {{ active_class(['home']) }}">
+                    <a href="{{ url('/home') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Dashboard</span>
                     </a>
@@ -76,12 +76,20 @@
                         <span class="link-title">Daftar Peminjaman</span>
                     </a>
                 </li>
+
+                    <li class="nav-item nav-category">Tamu</li>
+                    <li class="nav-item {{ active_class(['admin/tamu']) }}">
+                        <a href="{{ url('/admin/tamu') }}" class="nav-link">
+                            <i class="link-icon" data-feather="users"></i>
+                            <span class="link-title">Daftar Tamu</span>
+                        </a>
+                    </li>
             @endif
 
             @if(Auth::user()->role === 'pimpinan')
                 <li class="nav-item nav-category">Main</li>
-                <li class="nav-item {{ active_class(['dashboard']) }}">
-                    <a href="{{ url('/dashboard') }}" class="nav-link">
+                <li class="nav-item {{ active_class(['home']) }}">
+                    <a href="{{ url('/home') }}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">Dashboard</span>
                     </a>

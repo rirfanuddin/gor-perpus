@@ -26,5 +26,8 @@ Route::delete('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'd
 Route::get('/books', [\App\Http\Controllers\APIBooksController::class, 'getAllBooks']);
 Route::get('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'getDetailBook']);
 
+// API untuk count total ketersediaan book
+Route::get('/book_count/{id}', [\App\Http\Controllers\APIBooksController::class, 'getCountBook']);
+
 
 Route::post('/peminjaman_buku', [\App\Http\Controllers\APIPeminjamanController::class, 'createPeminjaman']);

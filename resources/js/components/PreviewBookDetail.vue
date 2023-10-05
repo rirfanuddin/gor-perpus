@@ -14,7 +14,10 @@
                             <option v-for="book in books" :key="book.id" :value="book.id">{{ book.judul_utama + " " + book.judul_tambahan }}</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" type="submit" v-if="bookDetails">Pinjam</button>
+
+                    <!-- disini -->
+
+                    <button class="btn btn-primary" type="submit" v-if="bookDetails && bookCount > 0">Pinjam</button>
                 </form>
             </div>
 
@@ -45,8 +48,11 @@
                 <h2>Preview Book</h2>
                 <hr>
             </div>
+
             <div class="card-body" v-if="bookDetails">
                 <h2>{{ bookDetails.judul_utama + " " + bookDetails.judul_tambahan}}</h2>
+                <h5 class="tersisa" v-if="bookCount > 0">Tersisa {{bookCount}} </h5>
+                <h5 class="tersisa" v-if="bookCount == 0">Buku telah dipinjam semua</h5>
                 <hr>
                 <div class="media d-block d-sm-flex">
                     <img v-bind:src="'/assets/images/' + bookDetails.cover" class="wd-100p wd-sm-200 mb-3 mb-sm-0 mr-3" alt="...">
@@ -127,6 +133,7 @@ export default {
             books: [],
             bookDetails: null,
             userId: null,
+            bookCount: null,
         }
     },
     methods: {
@@ -144,8 +151,11 @@ export default {
                 try {
                     console.log('selectedBookId : ' + this.selectedBookId);
                     const response = await fetch(`/api/book/${this.selectedBookId}`);
+                    const responseBookCount = await fetch(`/api/book_count/${this.selectedBookId}`);
                     const data = await response.json();
+                    const dataCount = await responseBookCount.json();
                     this.bookDetails = data;
+                    this.bookCount = dataCount;
                 } catch (error) {
                     console.error(error);
                 }

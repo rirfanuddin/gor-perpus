@@ -5,6 +5,7 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HalamanUtamaController;
 use App\Http\Controllers\PeminjamanController;
+use \App\Http\Controllers\TamuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,6 @@ use App\Http\Controllers\PeminjamanController;
 Route::get('/', [HalamanUtamaController::class, "getBooks"])->name('halamanUtama');
 Route::post('/db/tamu', [HalamanUtamaController::class, "storeTamu"])->name('storeTamuDB');
 
-Route::get('/dashboard', [DashboardController::class, "index"]);
-
-
 
 Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");
 
@@ -34,7 +32,7 @@ Route::post('/update_collection_db/{id}', [BooksController::class, "updateCollec
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [DashboardController::class, "index"]);
 
 Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get("/user/home", [\App\Http\Controllers\TestUserRoleController::class, 'home']);
@@ -48,5 +46,6 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
 
 Route::middleware(['auth', 'user-role:admin'])->group(function() {
     Route::get("/admin/home", [\App\Http\Controllers\TestUserRoleController::class, 'adminHome']);
+    Route::get("/admin/tamu", [TamuController::class, 'index']);
 });
 

@@ -31916,3 +31916,8 @@ datalist option {
 .item img {
     height: 500px;
 }
+
+.tersisa {
+    font-style: italic;
+    color: red;
+}

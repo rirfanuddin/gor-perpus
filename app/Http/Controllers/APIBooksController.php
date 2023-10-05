@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
 use App\Models\Books;
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,18 @@ class APIBooksController extends Controller
 
     function deleteBook() {
 
+    }
+
+    function getCountBook(Request $request) {
+        $totalDipinjam = PeminjamanBuku::where('book_id', $request->id)
+            ->where('status', 'DIPINJAM')->count();
+        $totalBuku = Books::select('jumlah')->where('id', $request->id)->first();
+        if(value($totalBuku)) {
+            $sisa = $totalBuku->jumlah - $totalDipinjam;
+        } else {
+            $sisa = null;
+        }
+        return $sisa;
     }
 
 }
