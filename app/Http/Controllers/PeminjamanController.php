@@ -13,11 +13,26 @@ use function Sodium\add;
 class PeminjamanController extends Controller
 {
     public function daftarPeminjaman() {
-        $responseBody = DB::table('peminjaman_buku')
-            ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
-            ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
-            ->select('users.name', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
-            ->get();
+        if(Auth::user()->role === 'user') {
+            $responseBody = DB::table('peminjaman_buku')
+                ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
+                ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
+                ->select('users.name', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->where('user_id', Auth::user()->id)
+                ->get();
+        } else if (Auth::user()->role === 'admin') {
+            $responseBody = DB::table('peminjaman_buku')
+                ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
+                ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
+                ->select('users.name', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->get();
+        } else if(Auth::user()->role === 'pimpinan') {
+            $responseBody = DB::table('peminjaman_buku')
+                ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
+                ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
+                ->select('users.name', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->get();
+        }
 
         return view('pages.daftar-peminjaman', compact('responseBody'));
     }
