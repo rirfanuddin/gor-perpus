@@ -62,7 +62,7 @@
                     </li>
                 @else
                     <li class="nav-item dropdown nav-notifications">
-                        <a href={{ route('login') }}" class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
+                        <a href={{ route('login') }} class="btn btn-primary active" role="button" aria-pressed="true">Login</a>
                     </li>
                 @endauth
             @endif
