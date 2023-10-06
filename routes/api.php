@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\TamuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/tamu', [TamuController::class, "storeTamu"])->name('storeTamuDB');
 
 Route::post('/books', [\App\Http\Controllers\APIBooksController::class, 'saveBook']);
 Route::put('/book/{id}', [\App\Http\Controllers\APIBooksController::class, 'updateBook']);

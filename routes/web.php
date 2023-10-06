@@ -19,7 +19,6 @@ use \App\Http\Controllers\TamuController;
 */
 
 Route::get('/', [HalamanUtamaController::class, "getBooks"])->name('halamanUtama');
-Route::post('/db/tamu', [HalamanUtamaController::class, "storeTamu"])->name('storeTamuDB');
 
 
 Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");

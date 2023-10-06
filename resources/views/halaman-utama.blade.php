@@ -200,7 +200,7 @@
             submitButton.addEventListener('click', function () {
                 const formData = new FormData(guestForm);
 
-                fetch('/db/tamu', {
+                fetch('/api/tamu', {
                     method: 'POST',
                     body: formData,
                     // headers: {
