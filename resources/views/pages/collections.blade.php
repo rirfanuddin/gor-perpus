@@ -43,21 +43,31 @@
                                     <td>{{ $x->penerbit }}</td>
                                     <td>{{ $x->bukti_fisik_romawi }}, {{ $x->bukti_fisik_halaman }}, {{ $x->bukti_fisik_tebal }}</td>
                                     <td>
-                                        <a href="/collections/{{$x->id}}">
-                                            <button type="button" class="btn btn-primary btn-icon" hr>
-                                                <i data-feather="eye"></i>
-                                            </button>
-                                        </a>
-                                        <a href="/update_collection/{{$x->id}}">
-                                            <button type="button" class="btn btn-warning btn-icon">
-                                                <i data-feather="edit"></i>
-                                            </button>
-                                        </a>
-                                        <a href="##">
-                                            <button type="button" class="btn btn-danger btn-icon">
-                                                <i data-feather="trash"></i>
-                                            </button>
-                                        </a>
+                                        @if(Auth::user()->role === 'user')
+                                            <a href="{{ url('/collections') . '/' . $x->id }}">
+                                                <button type="button" class="btn btn-primary btn-icon" hr>
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                            </a>
+                                        @endif
+
+                                        @if(Auth::user()->role === 'admin')
+                                            <a href="{{ url('/collections') . '/' . $x->id }}">
+                                                <button type="button" class="btn btn-primary btn-icon" hr>
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                            </a>
+                                            <a href="{{ url('/update_collection') . '/' . $x->id }}">
+                                                <button type="button" class="btn btn-warning btn-icon">
+                                                    <i data-feather="edit"></i>
+                                                </button>
+                                            </a>
+                                            <a href="##">
+                                                <button type="button" class="btn btn-danger btn-icon">
+                                                    <i data-feather="trash"></i>
+                                                </button>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
