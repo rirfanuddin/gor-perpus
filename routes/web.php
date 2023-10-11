@@ -21,14 +21,6 @@ use \App\Http\Controllers\TamuController;
 Route::get('/', [HalamanUtamaController::class, "getBooks"])->name('halamanUtama');
 
 
-Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");
-
-Route::get('/add_collection', [BooksController::class,"storeCollection"]);
-Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
-
-Route::get('/update_collection/{id}', [BooksController::class, "updateCollection"]);
-Route::post('/update_collection_db/{id}', [BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
-
 Auth::routes();
 
 Route::get('/home', [DashboardController::class, "index"]);
@@ -41,10 +33,15 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get('/api/get-user-id', [\App\Http\Controllers\APIPeminjamanController::class, 'getUserId']);
     Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);
     Route::get('/peminjaman/{id}', [\App\Http\Controllers\PeminjamanController::class, "detailPeminjaman"]);
+    Route::get('/collections/{id}', [BooksController::class, "getBookDetail"])->name("detailCollection");
 });
 
 Route::middleware(['auth', 'user-role:admin'])->group(function() {
     Route::get("/admin/home", [\App\Http\Controllers\TestUserRoleController::class, 'adminHome']);
     Route::get("/admin/tamu", [TamuController::class, 'index']);
+    Route::get('/update_collection/{id}', [BooksController::class, "updateCollection"]);
+    Route::post('/update_collection_db/{id}', [BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
+    Route::get('/add_collection', [BooksController::class,"storeCollection"]);
+    Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
 });
 
