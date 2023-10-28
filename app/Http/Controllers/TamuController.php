@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class TamuController extends Controller
 {
     function index() {
-        $responseBody = DB::table('tamu')->get();
+        $responseBody = Tamu::orderBy('created_at', 'desc')->get();
 
         return view('pages.tamu', compact('responseBody'));
     }
@@ -28,5 +28,14 @@ class TamuController extends Controller
         $tamu->save();
 
         return response()->json(['message' => 'Data tamu berhasil disimpan!']);
+    }
+
+    public function deleteTamu(Request $request, $id) {
+        $data = Tamu::find($id);
+        if ($data) {
+            $data->delete();
+            return redirect()->route('daftar.tamu')->with('success', 'Data berhasil dihapus.');
+        }
+        return redirect()->route('daftar.tamu')->with('error', 'Data tidak ditemukan.');
     }
 }

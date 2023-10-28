@@ -42,7 +42,8 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
 Route::middleware(['auth', 'user-role:admin'])->group(function() {
 
     // tamu
-    Route::get("/admin/tamu", [TamuController::class, 'index']);
+    Route::get("/admin/tamu", [TamuController::class, 'index'])->name('daftar.tamu');
+    Route::get("/admin/delete_tamu/{id}", [TamuController::class, 'deleteTamu'])->name('delete.tamu');
 
     // koleksi buku
     Route::get('/update_collection/{id}', [BooksController::class, "updateCollection"]);
@@ -51,6 +52,7 @@ Route::middleware(['auth', 'user-role:admin'])->group(function() {
     Route::get('/delete_collection/{id}', [BooksController::class,"deleteCollection"])->name('delete.collection');
     Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
 
+    // peminjaman
     Route::get('/delete_peminjaman/{id}', [PeminjamanController::class,"deletePeminjaman"])->name('delete.peminjaman');
 });
 
