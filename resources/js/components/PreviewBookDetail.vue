@@ -139,7 +139,7 @@ export default {
     methods: {
         async fetchBooks() {
             try {
-                const response = await fetch('/api/books');
+                const response = await fetch( baseUrl + '/api/books');
                 const data = await response.json();
                 this.books = data;
             } catch (error) {
@@ -150,8 +150,8 @@ export default {
             if (this.selectedBookId) {
                 try {
                     console.log('selectedBookId : ' + this.selectedBookId);
-                    const response = await fetch(`/api/book/${this.selectedBookId}`);
-                    const responseBookCount = await fetch(`/api/book_count/${this.selectedBookId}`);
+                    const response = await fetch(baseUrl + `/api/book/${this.selectedBookId}`);
+                    const responseBookCount = await fetch(baseUrl + `/api/book_count/${this.selectedBookId}`);
                     const data = await response.json();
                     const dataCount = await responseBookCount.json();
                     this.bookDetails = data;
@@ -165,7 +165,7 @@ export default {
         },
         async getUserId() {
             try {
-                const response = await axios.get('/api/get-user-id'); // Replace with your route
+                const response = await axios.get(baseUrl + '/api/get-user-id'); // Replace with your route
                 this.userId = response.data.user_id;
             } catch (error) {
                 console.error(error);
@@ -175,7 +175,7 @@ export default {
             console.log('masuk function submitPeminjaman');
             try {
                 if(this.selectedBookId) {
-                    const response = await axios.post('/api/peminjaman_buku', {
+                    const response = await axios.post(baseUrl + '/api/peminjaman_buku', {
                         user_id: this.userId,
                         book_id: this.selectedBookId,
                     });
