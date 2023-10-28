@@ -7,7 +7,7 @@
 @section('content')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/collections">Pencarian</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('collections') }}">Books</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $judul_utama }} {{ $judul_tambahan }}</li>
         </ol>
     </nav>
