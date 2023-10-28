@@ -102,30 +102,34 @@
                             </div>
                             <br>
                             <a class="btn btn-warning" href="{{url('daftar-peminjaman')}}">Kembali</a>
-                            <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Hapus</a>
 
-                            <!-- Modal konfirmasi -->
-                            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Apakah Anda yakin ingin menghapus data peminjaman a.n. {{ $name }}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <!-- Tambahkan tombol untuk mengonfirmasi penghapusan -->
-                                            <a class="btn btn-danger" href="{{ route('delete.peminjaman', $peminjaman_id) }}">Ya, Hapus</a>
-                                            <!-- Tombol untuk menutup modal -->
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            @if(\Illuminate\Support\Facades\Auth::user()->role === 'admin' || \Illuminate\Support\Facades\Auth::user()->role === 'pimpinan')
+                                <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Hapus</a>
+                                <!-- Modal konfirmasi -->
+                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Apakah Anda yakin ingin menghapus data peminjaman a.n. {{ $name }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Tambahkan tombol untuk mengonfirmasi penghapusan -->
+                                                <a class="btn btn-danger" href="{{ route('delete.peminjaman', $peminjaman_id) }}">Ya, Hapus</a>
+                                                <!-- Tombol untuk menutup modal -->
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
+
                         </div>
                     </div>
                     <hr>

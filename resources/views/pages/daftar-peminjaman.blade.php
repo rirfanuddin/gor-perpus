@@ -64,6 +64,11 @@
                                                 </button>
                                             </a>
                                         @elseif(\Illuminate\Support\Facades\Auth::user()->role === 'admin')
+                                            <a href="{{ url('/peminjaman/' . $x->id) }}">
+                                                <button type="button" class="btn btn-primary btn-icon" hr>
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                            </a>
                                             <a href="http://wa.me/{{$x->phone_no}}?text=Anda memiliki peminjaman buku {{ $x->judul_utama . ' ' . $x->judul_tambahan}} yang jatuh tempo pada tanggal {{ date('d-m-Y', strtotime($x->tanggal_harus_kembali)) }}" target="_blank">
                                                 <button type="button" class="btn btn-success btn-icon">
                                                     <i data-feather="navigation"></i>

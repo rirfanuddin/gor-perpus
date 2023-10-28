@@ -14,19 +14,35 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index() {
-        $data = User::where('id', Auth::user()->id)->first();
+        $user_id = Auth::user()->id;
+        $data = User::where('id', $user_id)->first();
         $jumlah_buku = Books::count();
         $jumlah_tamu = Tamu::count();
-        $jumlah_peminjaman = PeminjamanBuku::count();
-        $jumlah_sedang_dipinjam = PeminjamanBuku::where('tanggal_kembali', null)->count();
+
+        if(Auth::user()->role === 'user') {
+            $jumlah_peminjaman = PeminjamanBuku::where('user_id', $user_id)->count();
+            $jumlah_sedang_dipinjam = PeminjamanBuku::where('tanggal_kembali', null)->where('user_id', $user_id)->count();
+            $peminjaman_on_progres = $responseBody = DB::table('peminjaman_buku')
+                ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
+                ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
+                ->select('users.name', 'users.phone_no', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->where('peminjaman_buku.tanggal_kembali', null)
+                ->where('peminjaman_buku.user_id', $user_id)
+                ->take(5)
+                ->get();
+        } else {
+            $jumlah_peminjaman = PeminjamanBuku::count();
+            $jumlah_sedang_dipinjam = PeminjamanBuku::where('tanggal_kembali', null)->count();
+            $peminjaman_on_progres = $responseBody = DB::table('peminjaman_buku')
+                ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
+                ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
+                ->select('users.name', 'users.phone_no', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->where('peminjaman_buku.tanggal_kembali', null)
+                ->take(5)
+                ->get();
+        }
+
         $tamu_terakhir = Tamu::orderBy('created_at', 'desc')->take(5)->get();
-        $peminjaman_on_progres = $responseBody = DB::table('peminjaman_buku')
-            ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
-            ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
-            ->select('users.name', 'users.phone_no', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
-            ->where('peminjaman_buku.tanggal_kembali', null)
-            ->take(5)
-            ->get();
 
         $data->jumlah_buku = $jumlah_buku;
         $data->jumlah_tamu = $jumlah_tamu;
@@ -82,7 +98,7 @@ class DashboardController extends Controller
         return response()->json($responseData);
     }
 
-    public function getDashboardPeminjaman() {
+    public function getDashboardPeminjaman(Request $request) {
         // Dapatkan tanggal sekarang
         $today = Carbon::now();
 
@@ -95,27 +111,53 @@ class DashboardController extends Controller
         $data = [];
         $max = 0;
 
-        for ($i = 1; $i <= 12; $i++) {
-            // Format bulan dengan 3 huruf (Jan, Feb, Mar, dst.)
-            $bulan[] = $today->month($startMonth)->format('M');
+        if($request->user_id) {
+            for ($i = 1; $i <= 12; $i++) {
+                // Format bulan dengan 3 huruf (Jan, Feb, Mar, dst.)
+                $bulan[] = $today->month($startMonth)->format('M');
 
-            // Query database untuk mengambil jumlah peminjaman
-            $jumlahPeminjaman = PeminjamanBuku::whereYear('created_at', $startYear)
-                ->whereMonth('created_at', $startMonth)
-                ->count();
+                // Query database untuk mengambil jumlah peminjaman
+                $jumlahPeminjaman = PeminjamanBuku::whereYear('created_at', $startYear)
+                    ->whereMonth('created_at', $startMonth)
+                    ->where('user_id', $request->user_id)
+                    ->count();
 
-            if($max < $jumlahPeminjaman) {
-                $max = $jumlahPeminjaman;
+                if($max < $jumlahPeminjaman) {
+                    $max = $jumlahPeminjaman;
+                }
+
+                $startMonth++;
+                if($startMonth > 12) {
+                    $startYear++;
+                    $startMonth = 1;
+                }
+
+                $data[] = $jumlahPeminjaman;
             }
+        } else {
+            for ($i = 1; $i <= 12; $i++) {
+                // Format bulan dengan 3 huruf (Jan, Feb, Mar, dst.)
+                $bulan[] = $today->month($startMonth)->format('M');
 
-            $startMonth++;
-            if($startMonth > 12) {
-                $startYear++;
-                $startMonth = 1;
+                // Query database untuk mengambil jumlah peminjaman
+                $jumlahPeminjaman = PeminjamanBuku::whereYear('created_at', $startYear)
+                    ->whereMonth('created_at', $startMonth)
+                    ->count();
+
+                if($max < $jumlahPeminjaman) {
+                    $max = $jumlahPeminjaman;
+                }
+
+                $startMonth++;
+                if($startMonth > 12) {
+                    $startYear++;
+                    $startMonth = 1;
+                }
+
+                $data[] = $jumlahPeminjaman;
             }
-
-            $data[] = $jumlahPeminjaman;
         }
+
 
         // Format data sebagai respons JSON
         $responseData = [

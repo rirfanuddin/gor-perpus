@@ -136,4 +136,65 @@ $(function() {
         // Peminjaman chart end
     });
 
+    var userIdElement = document.getElementById('user-id');
+    var userId = userIdElement.getAttribute('data-user-id');
+    $.get(baseUrl + '/api/dashboard/peminjaman?user_id=' + userId, function(data) {
+        // Data JSON akan tersedia di sini
+        var bulan = data.bulan;
+        var dataPeminjaman = data.data;
+        var maks = data.max;
+
+        // Peminjaman chart start
+        if ($('#peminjaman-user-chart').length) {
+            var peminjamanUserChart = document.getElementById('peminjaman-user-chart').getContext('2d');
+            new Chart(peminjamanUserChart, {
+                    type: 'bar',
+                    data: {
+                        labels: bulan,
+                        datasets: [{
+                            label: 'Peminjaman',
+                            data: dataPeminjaman,
+                            backgroundColor: colors.primary
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false,
+                            labels: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                barPercentage: .3,
+                                categoryPercentage: .6,
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    fontColor: '#8392a5',
+                                    fontSize: 10
+                                }
+                            }],
+                            yAxes: [{
+                                gridLines: {
+                                    color: gridLineColor
+                                },
+                                ticks: {
+                                    fontColor: '#8392a5',
+                                    fontSize: 10,
+                                    min: 0,
+                                    max: maks
+                                }
+                            }]
+                        }
+                    }
+                }
+            );
+        }
+        // Peminjaman chart end
+    });
+
 });
