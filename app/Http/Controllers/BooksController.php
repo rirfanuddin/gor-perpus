@@ -124,4 +124,18 @@ class BooksController extends Controller
         ]);
     }
 
+    public function deleteCollection(Request $request, $id) {
+        $data = Books::find($id);
+        if ($data) {
+            // Hapus file gambar yang tersimpan di server
+            if (file_exists(public_path('assets/images/' . $data->cover))) {
+                unlink(public_path('assets/images/' . $data->cover));
+            }
+
+            $data->delete();
+            return redirect()->route('collections')->with('success', 'Data berhasil dihapus.');
+        }
+        return redirect()->route('collections')->with('error', 'Data tidak ditemukan.');
+    }
+
 }

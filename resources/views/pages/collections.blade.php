@@ -62,7 +62,7 @@
                                                     <i data-feather="edit"></i>
                                                 </button>
                                             </a>
-                                            <a href="##">
+                                            <a href="{{ route('delete.collection', $x->id) }}">
                                                 <button type="button" class="btn btn-danger btn-icon">
                                                     <i data-feather="trash"></i>
                                                 </button>

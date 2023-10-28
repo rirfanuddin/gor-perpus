@@ -42,6 +42,7 @@ Route::middleware(['auth', 'user-role:admin'])->group(function() {
     Route::get('/update_collection/{id}', [BooksController::class, "updateCollection"]);
     Route::post('/update_collection_db/{id}', [BooksController::class, "updateCollectionDB"])->name('updateCollectionDB');
     Route::get('/add_collection', [BooksController::class,"storeCollection"]);
+    Route::get('/delete_collection/{id}', [BooksController::class,"deleteCollection"])->name('delete.collection');
     Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
 });
 
