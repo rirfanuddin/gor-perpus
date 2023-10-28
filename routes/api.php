@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TamuController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,7 @@ Route::get('/book_count/{id}', [\App\Http\Controllers\APIBooksController::class,
 
 
 Route::post('/peminjaman_buku', [\App\Http\Controllers\APIPeminjamanController::class, 'createPeminjaman']);
+
+// dashboard
+Route::get('/dashboard/tamu', [DashboardController::class, 'getDashboardTamu']);
+Route::get('/dashboard/peminjaman', [DashboardController::class, 'getDashboardPeminjaman']);
