@@ -57,12 +57,12 @@
                                     @endif
 
                                     <th>
-                                        <a href="/peminjaman/{{$x->id}}">
+                                        <a href="{{ url('/peminjaman/' . $x->id) }}">
                                             <button type="button" class="btn btn-primary btn-icon" hr>
                                                 <i data-feather="eye"></i>
                                             </button>
                                         </a>
-                                        <a href="/update_collection/{{$x->id}}">
+                                        <a href="{{url('/update_collection/' . $x->id)}}">
                                             <button type="button" class="btn btn-warning btn-icon">
                                                 <i data-feather="edit"></i>
                                             </button>
