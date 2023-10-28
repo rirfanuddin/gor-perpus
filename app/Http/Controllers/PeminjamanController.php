@@ -64,11 +64,22 @@ class PeminjamanController extends Controller
     }
 
     public function detailPeminjaman(Request $request) {
-        $responseBody = PeminjamanBuku::select("peminjaman_buku.*", "gorlib_buku.*")
+        $responseBody = PeminjamanBuku::select("gorlib_buku.*", "peminjaman_buku.id as peminjaman_id", "peminjaman_buku.tanggal_harus_kembali", "peminjaman_buku.status",
+        "peminjaman_buku.tanggal_kembali", "peminjaman_buku.created_at as tanggal_pinjam", "users.*")
             ->join("gorlib_buku", "gorlib_buku.id" , "=", "peminjaman_buku.book_id")
+            ->join("users", "users.id" , "=", "peminjaman_buku.user_id")
             ->where("peminjaman_buku.id", $request->id)
             ->first();
 
         return view('pages.detail-peminjaman', $responseBody);
+    }
+
+    public function deletePeminjaman(Request $request, $id) {
+        $data = PeminjamanBuku::find($id);
+        if ($data) {
+            $data->delete();
+            return redirect()->route('daftar.peminjaman')->with('success', 'Data berhasil dihapus.');
+        }
+        return redirect()->route('daftar.peminjaman')->with('error', 'Data tidak ditemukan.');
     }
 }

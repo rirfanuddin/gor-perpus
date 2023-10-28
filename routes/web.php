@@ -34,7 +34,7 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get('/buat-peminjaman', [PeminjamanController::class, "createPeminjaman"]);
     Route::post('/buat-peminjaman-db', [PeminjamanController::class, "createPeminjamanDB"])->name("createPeminjamanDB");
     Route::get('/api/get-user-id', [\App\Http\Controllers\APIPeminjamanController::class, 'getUserId']);
-    Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"]);
+    Route::get('/daftar-peminjaman', [\App\Http\Controllers\PeminjamanController::class, "daftarPeminjaman"])->name('daftar.peminjaman');
     Route::get('/peminjaman/{id}', [\App\Http\Controllers\PeminjamanController::class, "detailPeminjaman"])->name('detail.peminjaman');
 
 });
@@ -50,5 +50,7 @@ Route::middleware(['auth', 'user-role:admin'])->group(function() {
     Route::get('/add_collection', [BooksController::class,"storeCollection"]);
     Route::get('/delete_collection/{id}', [BooksController::class,"deleteCollection"])->name('delete.collection');
     Route::post('/add_collection_db', [BooksController::class,"storeCollectionDB"])->name('storeCollectionDB');
+
+    Route::get('/delete_peminjaman/{id}', [PeminjamanController::class,"deletePeminjaman"])->name('delete.peminjaman');
 });
 
