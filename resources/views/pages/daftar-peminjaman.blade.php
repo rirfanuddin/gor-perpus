@@ -7,8 +7,8 @@
 @section('content')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data Table</li>
+            <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Peminjaman</li>
         </ol>
     </nav>
 
@@ -16,8 +16,8 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Data Table</h6>
-                    <p class="card-description">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p>
+                    <h6 class="card-title">Data Peminjaman Buku</h6>
+                    <p class="card-description">Data peminjaman buku perpustakaan di BPK Perwakilan Provinsi Gorontalo</p>
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">
                             <thead>
@@ -62,9 +62,9 @@
                                                 <i data-feather="eye"></i>
                                             </button>
                                         </a>
-                                        <a href="{{url('/update_collection/' . $x->id)}}">
-                                            <button type="button" class="btn btn-warning btn-icon">
-                                                <i data-feather="edit"></i>
+                                        <a href="http://wa.me/{{$x->phone_no}}?text=Anda memiliki peminjaman buku {{ $x->judul_utama . ' ' . $x->judul_tambahan}} yang jatuh tempo pada tanggal {{ date('d-m-Y', strtotime($x->tanggal_harus_kembali)) }}" target="_blank">
+                                            <button type="button" class="btn btn-success btn-icon">
+                                                <i data-feather="navigation"></i>
                                             </button>
                                         </a>
                                     </th>

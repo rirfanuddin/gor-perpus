@@ -24,7 +24,7 @@ class PeminjamanController extends Controller
             $responseBody = DB::table('peminjaman_buku')
                 ->join('gorlib_buku', 'peminjaman_buku.book_id', '=', 'gorlib_buku.id')
                 ->join('users', 'peminjaman_buku.user_id', '=', 'users.id')
-                ->select('users.name', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
+                ->select('users.name', 'users.phone_no', 'peminjaman_buku.*', 'gorlib_buku.judul_utama', 'gorlib_buku.judul_tambahan')
                 ->get();
         } else if(Auth::user()->role === 'pimpinan') {
             $responseBody = DB::table('peminjaman_buku')
