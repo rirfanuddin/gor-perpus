@@ -7,7 +7,8 @@
 @section('content')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Books</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Koleksi</li>
         </ol>
     </nav>
 
@@ -15,8 +16,8 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Data Table</h6>
-                    <p class="card-description">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p>
+                    <h6 class="card-title">Data Buku</h6>
+                    <p class="card-description">Data buku di Perpustakaan  BPK Perwakilan Provinsi Gorontalo</p>
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">
                             <thead>
