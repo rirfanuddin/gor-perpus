@@ -19,7 +19,7 @@ class APIPeminjamanController extends Controller
         $peminjamanBuku->book_id = $validatedData['book_id'];
         $peminjamanBuku->user_id = $validatedData['user_id'];
 
-        $harus_kembali=Date('y:m:d', strtotime('+3 days'));
+        $harus_kembali=Date('y:m:d', strtotime('+14 days'));
 
         $peminjamanBuku->tanggal_harus_kembali = $harus_kembali;
         $peminjamanBuku->status = 'DIPINJAM';
