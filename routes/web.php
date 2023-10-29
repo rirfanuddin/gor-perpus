@@ -38,6 +38,7 @@ Route::middleware(['auth', 'user-role:user,admin'])->group(function() {
     Route::get('/peminjaman/{id}', [\App\Http\Controllers\PeminjamanController::class, "detailPeminjaman"])->name('detail.peminjaman');
     Route::get('/delete_peminjaman/{id}', [PeminjamanController::class,"deletePeminjaman"])->name('delete.peminjaman');
     Route::get('/kembalikan_peminjaman/{id}', [PeminjamanController::class,"pengembalian"])->name('pengembalian');
+    Route::get('/peminjaman_buku_langsung', [PeminjamanController::class, 'createPeminjamanLangsung'])->name('create.peminjaman');
 
 });
 

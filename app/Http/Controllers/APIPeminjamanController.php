@@ -18,7 +18,7 @@ class APIPeminjamanController extends Controller
             ->where('tanggal_kembali', null)
             ->count();
 
-        if($jumlah_peminjaman_belum_kembali > 3) {
+        if($jumlah_peminjaman_belum_kembali >= 3) {
             return response()->json([
                 'status' => 'Failed, more than 3'
             ]);

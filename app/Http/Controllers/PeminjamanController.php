@@ -67,6 +67,38 @@ class PeminjamanController extends Controller
         return redirect()->route('collections')->with('success', 'Post created successfully');
     }
 
+    public function createPeminjamanLangsung(Request $request) {
+        $validatedData = $request->validate([
+            'book_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $jumlah_peminjaman_belum_kembali = PeminjamanBuku::where('user_id', $validatedData['user_id'])
+            ->where('tanggal_kembali', null)
+            ->count();
+
+
+        if($jumlah_peminjaman_belum_kembali >= 3) {
+            $showModalError = true;
+            $data = Books::where('id', $validatedData['book_id'])->first();
+            $data->count = null;
+            return view('pages.book-detail', $data)->with('showModalError', $showModalError);
+        } else {
+            $peminjamanBuku = new PeminjamanBuku();
+
+            $peminjamanBuku->book_id = $validatedData['book_id'];
+            $peminjamanBuku->user_id = $validatedData['user_id'];
+
+            $harus_kembali=Date('y:m:d', strtotime('+14 days'));
+
+            $peminjamanBuku->tanggal_harus_kembali = $harus_kembali;
+            $peminjamanBuku->status = 'DIPINJAM';
+            $peminjamanBuku->save();
+
+            return redirect()->route('daftar.peminjaman')->with('success', 'Data berhasil disubmit.');
+        }
+    }
+
     public function detailPeminjaman(Request $request) {
         $responseBody = PeminjamanBuku::select("gorlib_buku.*", "peminjaman_buku.id as peminjaman_id", "peminjaman_buku.tanggal_harus_kembali", "peminjaman_buku.status",
         "peminjaman_buku.tanggal_kembali", "peminjaman_buku.created_at as tanggal_pinjam", "users.*")

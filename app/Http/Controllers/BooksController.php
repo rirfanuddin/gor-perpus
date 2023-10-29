@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Books;
@@ -28,6 +29,18 @@ class BooksController extends Controller
 
     public function getBookDetail(Request $request) {
         $book = Books::where('id', $request->id)->first();
+
+        $totalDipinjam = PeminjamanBuku::where('book_id', $request->id)
+            ->where('status', 'DIPINJAM')->count();
+        $totalBuku = Books::select('jumlah')->where('id', $request->id)->first();
+        if(value($totalBuku)) {
+            $sisa = $totalBuku->jumlah - $totalDipinjam;
+        } else {
+            $sisa = null;
+        }
+
+        $book->count = $sisa;
+        $book->showModalError = null;
         return view('pages.book-detail', $book);
     }
 
