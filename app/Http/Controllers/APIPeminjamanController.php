@@ -14,20 +14,30 @@ class APIPeminjamanController extends Controller
             'user_id' => 'required',
         ]);
 
-        $peminjamanBuku = new PeminjamanBuku();
+        $jumlah_peminjaman_belum_kembali = PeminjamanBuku::where('user_id', $validatedData['user_id'])
+            ->where('tanggal_kembali', null)
+            ->count();
 
-        $peminjamanBuku->book_id = $validatedData['book_id'];
-        $peminjamanBuku->user_id = $validatedData['user_id'];
+        if($jumlah_peminjaman_belum_kembali > 3) {
+            return response()->json([
+                'status' => 'Failed, more than 3'
+            ]);
+        } else {
+            $peminjamanBuku = new PeminjamanBuku();
 
-        $harus_kembali=Date('y:m:d', strtotime('+14 days'));
+            $peminjamanBuku->book_id = $validatedData['book_id'];
+            $peminjamanBuku->user_id = $validatedData['user_id'];
 
-        $peminjamanBuku->tanggal_harus_kembali = $harus_kembali;
-        $peminjamanBuku->status = 'DIPINJAM';
-        $peminjamanBuku->save();
+            $harus_kembali=Date('y:m:d', strtotime('+14 days'));
 
-        return response()->json([
-            'status' => 'Success'
-        ]);
+            $peminjamanBuku->tanggal_harus_kembali = $harus_kembali;
+            $peminjamanBuku->status = 'DIPINJAM';
+            $peminjamanBuku->save();
+
+            return response()->json([
+                'status' => 'Success'
+            ]);
+        }
     }
 
     public function getUserId() {

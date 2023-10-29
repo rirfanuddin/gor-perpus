@@ -21,25 +21,6 @@
                 </form>
             </div>
 
-            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="successModalLabel">Sukses</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Data peminjaman buku berhasil disimpan.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
     <div class="col-md-6 grid-margin stretch-card">
@@ -180,7 +161,9 @@ export default {
                         book_id: this.selectedBookId,
                     });
 
-                    if(response.status === 200){
+                    if(response.data.status === 'Failed, more than 3') {
+                        $('#errorModal').modal('show');
+                    } else if(response.data.status === 'Success') {
                         $('#successModal').modal('show');
                     }
 

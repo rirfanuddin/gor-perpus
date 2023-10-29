@@ -17,6 +17,38 @@
 
     <div class="row" id="preview-book-detail">
         <preview-book-detail></preview-book-detail>
+
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Sukses</h5>
+                    </div>
+                    <div class="modal-body">
+                        Data peminjaman buku berhasil disimpan.
+                    </div>
+                    <div class="modal-footer">
+                        <i>Silakan klik diluar kotak untuk menutup!</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Error!</h5>
+                    </div>
+                    <div class="modal-body">
+                        Anda tidak diperbolehkan meminjam lebih dari 3 buku, lakukan pengembalian terlebih dahulu untuk melakukan peminjaman.
+                    </div>
+                    <div class="modal-footer">
+                        <i>Silakan klik diluar kotak untuk menutup!</i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('plugin-scripts')
