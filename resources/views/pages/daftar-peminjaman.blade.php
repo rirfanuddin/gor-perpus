@@ -53,7 +53,11 @@
                                             <td><span class="badge badge-warning">Sedang Dipinjam</span></td>
                                         @endif
                                     @elseif($x->status === 'DIKEMBALIKAN')
-                                        <td><span class="badge badge-success">Telah Dikembalikan</span></td>
+                                        @if($x->tanggal_kembali > $x->tanggal_harus_kembali)
+                                            <td><span class="badge badge-primary">Telah Dikembalikan (Terlambat)</span></td>
+                                        @else
+                                            <td><span class="badge badge-success">Telah Dikembalikan</span></td>
+                                        @endif
                                     @endif
 
                                     <td>

@@ -42,7 +42,11 @@
                                                 <td><span class="badge badge-warning">Sedang Dipinjam</span></td>
                                             @endif
                                         @elseif($status === 'DIKEMBALIKAN')
-                                            <td><span class="badge badge-success">Telah Dikembalikan</span></td>
+                                            @if($tanggal_kembali > $tanggal_harus_kembali)
+                                                <td><span class="badge badge-primary">Telah Dikembalikan (Terlambat)</span></td>
+                                            @else
+                                                <td><span class="badge badge-success">Telah Dikembalikan</span></td>
+                                            @endif
                                         @endif
                                     </tr>
                                     <tr>
@@ -103,24 +107,54 @@
                             <br>
                             <a class="btn btn-warning" href="{{url('daftar-peminjaman')}}">Kembali</a>
 
-                            @if(\Illuminate\Support\Facades\Auth::user()->role === 'admin' || \Illuminate\Support\Facades\Auth::user()->role === 'pimpinan')
-                                <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Hapus</a>
-                                <!-- Modal konfirmasi -->
-                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Hapus</a>
+                            <!-- Modal konfirmasi -->
+                            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah Anda yakin ingin menghapus data peminjaman a.n. {{ $name }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- Tambahkan tombol untuk mengonfirmasi penghapusan -->
+                                            <a class="btn btn-danger" href="{{ route('delete.peminjaman', $peminjaman_id) }}">Ya, Hapus</a>
+                                            <!-- Tombol untuk menutup modal -->
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if(\Illuminate\Support\Facades\Auth::user()->role === 'user')
+                                <a class="btn btn-primary" data-toggle="modal" data-target="#confirmKembalikan">Kembalikan</a>
+                                <!-- Modal konfirmasi Pengembalian-->
+                                <div class="modal fade" id="confirmKembalikan" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Pengembalian</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Apakah Anda yakin ingin menghapus data peminjaman a.n. {{ $name }}
+                                                @if($tanggal_kembali == null)
+                                                    Apakah Anda yakin ingin mengembalikan data peminjaman dengan judul:  {{ $judul_utama . " " . $judul_tambahan }}
+                                                @else
+                                                    Anda telah melakukan pengembalian
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
-                                                <!-- Tambahkan tombol untuk mengonfirmasi penghapusan -->
-                                                <a class="btn btn-danger" href="{{ route('delete.peminjaman', $peminjaman_id) }}">Ya, Hapus</a>
+                                                @if($tanggal_kembali == null)
+                                                    <!-- Tambahkan tombol untuk mengonfirmasi penghapusan -->
+                                                    <a class="btn btn-primary" href="{{ route('pengembalian', $peminjaman_id) }}">Ya, Kembalikan</a>
+                                                @endif
                                                 <!-- Tombol untuk menutup modal -->
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                             </div>

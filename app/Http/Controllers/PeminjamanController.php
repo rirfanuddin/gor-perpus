@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Books;
 use App\Models\PeminjamanBuku;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -81,5 +82,17 @@ class PeminjamanController extends Controller
             return redirect()->route('daftar.peminjaman')->with('success', 'Data berhasil dihapus.');
         }
         return redirect()->route('daftar.peminjaman')->with('error', 'Data tidak ditemukan.');
+    }
+
+    public function pengembalian(Request $request, $id) {
+        $data = PeminjamanBuku::find($id);
+        if($data) {
+            $data->status = "DIKEMBALIKAN";
+            $data->tanggal_kembali = Carbon::now();
+            $data->updated_at = Carbon::now();
+            $data->update();
+            return redirect()->route('detail.peminjaman', $id)->with('success', 'Data berhasil dikembalikan.');
+        }
+        return redirect()->route('daftar.peminjaman')->with('error', 'Gagal mengambalikan');
     }
 }
