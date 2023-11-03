@@ -48,6 +48,10 @@
                                 <input type="text" class="form-control" id="exampleInputText1" value="{{$tahun_terbit}}" placeholder="Tahun Terbit" name="tahun_terbit">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputText1">Jumlah</label>
+                                <input type="number" class="form-control" id="exampleInputText1" value="{{$jumlah}}" placeholder="Jumlah" name="jumlah">
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputText1">Bukti Fisik (Jumlah Halaman Romawi)</label>
                                 <input type="text" class="form-control" id="exampleInputText1" value="{{$bukti_fisik_romawi}}" placeholder="Jumlah Halaman Romawi" name="bukti_fisik_romawi">
                             </div>

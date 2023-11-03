@@ -72,6 +72,7 @@ class BooksController extends Controller
         $books->pengarang_utama = $validatedData['pengarang_utama'];
         $books->pengarang_tambahan = $request->pengarang_tambahan;
         $books->penerbit = $request->penerbit;
+        $books->jumlah = $request->jumlah;
         $books->kota_terbit = $request->kota_terbit;
         $books->tahun_terbit = $request->tahun_terbit;
         $books->bukti_fisik_romawi = $request->bukti_fisik_romawi;
@@ -115,6 +116,7 @@ class BooksController extends Controller
         $book->pengarang_utama = $validatedData['pengarang_utama'];
         $book->pengarang_tambahan = $request->pengarang_tambahan;
         $book->penerbit = $request->penerbit;
+        $book->jumlah = $request->jumlah;
         $book->kota_terbit = $request->kota_terbit;
         $book->tahun_terbit = $request->tahun_terbit;
         $book->bukti_fisik_romawi = $request->bukti_fisik_romawi;
