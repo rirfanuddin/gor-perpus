@@ -107,7 +107,7 @@
                                         <td>{{ $x->penerbit }}</td>
                                         <td>{{ $x->bukti_fisik_romawi }}, {{ $x->bukti_fisik_halaman }}, {{ $x->bukti_fisik_tebal }}</td>
                                         <td>
-                                            <a href="/collections/{{$x->id}}">
+                                            <a href="{{url('/collections/' . $x->id)}}">
                                                 <button type="button" class="btn btn-primary btn-icon" hr>
                                                     <i data-feather="eye"></i>
                                                 </button>
